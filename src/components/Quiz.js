@@ -7,15 +7,27 @@ const Quiz = () => {
   console.log("quizState from context:", quizState);
   return (
     <div className="quiz">
-      <div>
-        <div className="score">
-          Question 1 of 8
+      {quizState.showResults && (
+        <div className="results">
+          <div className="congratulations">Congratulations!</div>
+          <div className="results-info">
+            <div>You have completed the quiz.</div>
+            <div>Your score is 3 out of {quizState.questions.length}</div>
+          </div>
+          <div className="next-button" onClick={() => dispatch({ type: "RESTART" })}>Restart</div>
         </div>
-        <Question />
-        <div className="next-button" onClick={() => dispatch({ type: "NEXT_QUESTION" })}>
-          Next Question
+      )}
+      {!quizState.showResults && (
+        <div>
+          <div className="score">
+            Question {quizState.currentQuestionIndex + 1} of {quizState.questions.length}
+          </div>
+          <Question />
+          <div className="next-button" onClick={() => dispatch({ type: "NEXT_QUESTION" })}>
+            Next Question
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
