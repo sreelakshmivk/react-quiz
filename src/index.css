@@ -36,6 +36,19 @@ div {
   color: #fff;
 }
 
+.error {
+  background-color: #dc0a0a;
+  padding: 20px;
+  font-size: 36px;
+  color: #070000;
+}
+
+.error-info {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  font-size: 20px;
+}
+
 .results-info {
   margin-top: 40px;
   margin-bottom: 40px;

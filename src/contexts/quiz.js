@@ -8,6 +8,7 @@ const initialState = {
     answers: [],
     currentAnswer: '',
     currectAnswerCount: 0,
+    error: null,
 };
 const reducer = (state, action) => {
     switch (action.type) {
@@ -44,6 +45,12 @@ const reducer = (state, action) => {
                 ...state,
                 questions: decodedData,
                 answers: decodedData.length > 0 ? shuffleAnswers(decodedData[0]) : [],
+            }
+        }
+        case "SERVER_ERROR": {
+            return {
+                ...state,
+                error: action.payload,
             }
         }
         default: {

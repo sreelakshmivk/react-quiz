@@ -7,7 +7,7 @@ const Quiz = () => {
   const apiUrl = "https://opentdb.com/api.php?amount=10&type=multiple&encode=url3986";
 
   useEffect(() => {
-    if (quizState.questions.length > 0) {
+    if (quizState.questions.length > 0 || quizState.error) {
       return;
     }
 
@@ -15,11 +15,21 @@ const Quiz = () => {
       .then(resp => resp.json())
       .then(data => {
         dispatch({ type: "LOADED_QUESTIONS", payload: data.results });
-      })
+      }).catch(error => {
+        dispatch({ type: "SERVER_ERROR", payload: error.message });
+      });
   });
 
   return (
     <div className="quiz">
+      {quizState.error && (
+        <div className="results">
+          <div className="error">Server Error</div>
+          <div className="error-info">
+            <div>{quizState.error}</div>
+          </div>
+        </div>
+      )}
       {quizState.showResults && (
         <div className="results">
           <div className="congratulations">Congratulations!</div>
