@@ -10,3 +10,15 @@ export const shuffleAnswers = question => {
     })).sort((a, b) => a.sort - b.sort)
         .map((a) => a.value);
 }
+
+export const decodeData = (backendQuestions) => {
+    return backendQuestions.map((backendQuestion) => {
+        const incorrectAnswers = backendQuestion.incorrect_answers.map(
+            (incorrectAnswer) => decodeURIComponent(incorrectAnswer));
+        return {
+            correctAnswer: decodeURIComponent(backendQuestion.correct_answer),
+            incorrectAnswers: incorrectAnswers,
+            question: decodeURIComponent(backendQuestion.question),
+        };
+    });
+}

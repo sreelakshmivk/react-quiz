@@ -1,12 +1,11 @@
-import { act, createContext, useReducer } from "react";
-import questions from "../data";
-import { shuffleAnswers } from "../helpers";
+import { createContext, useReducer } from "react";
+import { shuffleAnswers, decodeData } from "../helpers";
 
 const initialState = {
     currentQuestionIndex: 0,
-    questions,
+    questions: [],
     showResults: false,
-    answers: shuffleAnswers(questions[0]),
+    answers: [],
     currentAnswer: '',
     currectAnswerCount: 0,
 };
@@ -38,6 +37,14 @@ const reducer = (state, action) => {
         }
         case "RESTART": {
             return initialState;
+        }
+        case "LOADED_QUESTIONS": {
+            const decodedData = action.payload ? decodeData(action.payload) : [];
+            return {
+                ...state,
+                questions: decodedData,
+                answers: decodedData.length > 0 ? shuffleAnswers(decodedData[0]) : [],
+            }
         }
         default: {
             return state;
